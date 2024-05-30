@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .register-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group.row > div {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        .btn-primary {
+            background-color: #6f00ff;
+            border-color: #6f00ff;
+        }
+        .btn-primary:hover {
+            background-color: #320074;
+            border-color: #320074;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white;">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-size: 20px; font-weight: 600; color:  #6f00ff; margin-top: 10px;">
+                <img src="image.png" style="width: 125px; margin-right: 10px;" alt="Logo">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dbtinc' %}">Debit2Income</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'emi' %}">EMI</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Sign-In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign-Up</a>
+                    </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signout' %}">Sign-Out</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container register-container">
+        <h2 class="text-center">Register</h2>
+        <form id="registerForm" method="post" action="register">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="username" class="form-label">UserName</label>
+                <input type="text" name="username" class="form-control" id="username" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="col">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="password" required>
+                </div>
+                <div class="col">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Register as:</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="userType" id="user" value="user" required>
+                        <label class="form-check-label" for="user">
+                            <i class="fa fa-user"></i> User
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="userType" id="bankManager" value="bank" required>
+                        <label class="form-check-label" for="bankManager">
+                            <i class="fa fa-user-tie"></i> Bank Manager
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                
+            </div>
+            <input type="submit" class="btn btn-primary w-100" value="Register">
+        </form>
+    </div>
+    <!-- <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add your form submission logic here
+        });
+    </script> -->
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .security-question-container {
+            display: none;
+        }
+        .btn-primary {
+            background-color: #6f00ff;
+            border-color: #6f00ff;
+        }
+        .btn-primary:hover {
+            background-color: #320074;
+            border-color: #320074;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white;">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-size: 20px; font-weight: 600; color:  #6f00ff; margin-top: 10px;">
+                <img src="image.png" style="width: 125px; margin-right: 10px;" alt="Logo">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dbtinc' %}">Debit2Income</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'emi' %}">EMI</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Sign-In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign-Up</a>
+                    </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signout' %}">Sign-Out</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container login-container">
+        <h2 class="text-center">Login</h2>
+        <form id="loginForm" method="post" action="signin">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input name="username" type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input name='password' type="password" class="form-control" id="password" required>
+            </div>
+        
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+  
+</body>
+</html>

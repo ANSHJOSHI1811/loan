@@ -1,0 +1,158 @@
+{% extends 'loan_app/base.html' %}
+{% block pagetitle %}
+{% endblock pagetitle %}
+
+{% block body %}
+
+        <div class="container my-3">
+                <form method="POST" action="predict-loans">
+                        {% csrf_token %}
+                        <div class="row" style="padding-top: 3%;">
+                                <div class="col-md-4">
+                                        <label class="form-label">Employment Type:</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Employment_Status" required>
+                                                <option selected>Select type</option>
+                                                <option value="Employed">Employed</option>
+                                                <option value="Self-employed">Self-employed</option>
+                                                <option value="Unemployed">Unemployed</option>
+                                                </select>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Loan Term: *</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Loan_Term">
+                                                <option selected>Select Loan Term</option>
+                                                <option value="6 months">6 months</option>
+                                                <option value="12 months">12 months</option>
+                                                <option value="18 months">18 months</option>
+                                                <option value="24 months">24 months</option>
+                                                <option value="36 months">36 months</option>
+                                                <option value="48 months">48 months</option>
+                                                <option value="60 months">60 months</option>
+                                                <option value="72 months">72 months</option>
+                                                <option value="84 months">84 months</option>
+                                        </select>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Income</label>
+                                        <input type="number" name="Annual Income" class="form-control" aria-describedby="passwordHelpInline"   placeholder="0,00,000*" required>
+                                      </div>
+
+                                </div>                    
+                        <!-- Add more rows and elements similarly -->
+                        <div class="row mt-3">
+                                <div class="col-md-4">
+                                        <label class="form-label">Loan Purpose:</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Loan_Purpose">
+                                              <option selected>Select Purpose of Loan</option>
+                                              <option value="Business">Business</option>
+                                              <option value="Car Purchase">Car Purchase</option>
+                                              <option value="Car Repair">Car Repair</option>
+                                              <option value="Debt consolidation">Debt consolidation</option>
+                                              <option value="Home improvement">Home improvement</option>
+                                              <option value="Home Purchase">Home Purchase</option>
+                                              <option value="Home Repair">Home Repair</option>
+                                              <option value="Medical">Medical</option>
+                                              <option value="Vacation">Vacation</option>
+                                              </select>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Number of Dependents</label>
+                                        <input type="number" name="Number_of_Dependents" class="form-control" aria-describedby="passwordHelpInline "  placeholder="00*"required>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Years of Employment</label>
+                                        <input type="number" name="Years_of_Employment" class="form-control" aria-describedby="passwordHelpInline"  placeholder="00*" required>
+                                </div>
+                        </div>
+                        <div class="row mt-3">
+                                
+                                <div class="col-md-4">
+                                        <label class="form-label">Savings</label>
+                                        <input type="number" name="Savings" class="form-control" aria-describedby="passwordHelpInline" placeholder="00,000*" required>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Current Debt</label>
+                                        <input type="number" name="Current_Debt" class="form-control" aria-describedby="passwordHelpInline" placeholder="00,000*" required>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Marital Status:</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Marital_Status">
+                                                <option selected>Select Martial Status *</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Married">Married</option>
+                                        </select>
+                                </div>
+                        </div>
+                        <div class="row mt-3">
+                                <div class="col-md-4">
+                                        <label class="form-label">Loan Amount</label>
+                                        <input type="number" name="Loan_Amount" class="form-control" aria-describedby="passwordHelpInline" placeholder="00,000*" required>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Age</label>
+                                        <input type="number" name="Age" class="form-control" aria-describedby="passwordHelpInline" placeholder="00,000*" required>
+                                </div>
+                                <div class="col-md-4">
+                                        <label class="form-label">Assets</label>
+                                        <input type="number" name="Assets" class="form-control" aria-describedby="passwordHelpInline"placeholder="0*" required>
+                                </div>
+                         
+                        </div>
+                        <div class="row mt-3">
+                                {% if request.user.custom_role == 'bank' %}
+                                <div class="col-md-4">
+                                        <label class="form-label">Payment History:</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Payment_History" required>
+                                                <option selected>Select Payment History</option>
+                                                <option value="Excellent">Excellent</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                        </select>                        </div>
+
+                                {% endif %}
+                                
+                                {% if request.user.custom_role == 'bank' %}
+                                <div class="col-md-4">
+                                  <label class="form-label">Credit Score</label>
+                                  <input type="number" name="Credit_Score" class="form-control" aria-describedby="passwordHelpInline"  placeholder="0000*" required>
+                                </div>
+                                {% endif %}
+
+                                {% if request.user.custom_role == 'bank' %}
+                                <div class="col-md-4">
+                                        <label class="form-label">Debt to Income Ratio</label>
+                                        <input type="number" step="0.01" name="Debt_to_Income_Ratio" class="form-control" aria-describedby="passwordHelpInline" placeholder="0.0*" required>
+                                </div> 
+                                {% endif %}                           
+                         </div>                   
+                        <div class="row mt-3">
+                                <div class="col-md-4">
+                                        <label class="form-label">Housing Status:</label>
+                                        <select class="form-select form-select-sm" aria-label="Small select example" name="Housing_Status">
+                        <option selected>Housing Status</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Own">Own</option>
+                </select>
+                                </div>
+                                <div class="col-md-4">
+                                <label class="form-label">Education Level:</label>
+                                <select class="form-select form-select-sm" aria-label="Small select example" name="Education_Level">
+                                <option selected>Select Education Level</option>
+                                <option value="PhD">PhD</option>
+                                <option value="Bachelors">Bachelor's</option>
+                                <option value="Masters">Master's</option>
+                                <option value="Associate">Associate's</option>
+                                <option value="High School">High School</option>
+                                </select>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                        <input type="submit" class="btn btn-primary" id="submit" value="Predict">
+                                </div>
+                        </div>
+                </form>
+        </div>
+
+        {% endblock body %}
+
+        
